@@ -4,15 +4,15 @@ class URLs:
         self.base_url = "https://xbl.io/api/v2/"
         
         # account
-        self.account_xuid = f"account/{'{xuid}'}"
+        self.account_xuid = "account/{xuid}"
         self.search_gamertag = "search/{gamertag}"
-        self.xuid_presence = f"{'{xuid}'}/presence"
+        self.xuid_presence = "{xuid}/presence"
         
         # achievements
-        self.achievements_xuid = f"achievements/player/{'{xuid}'}"
-        self.title_achievements_xuid = f"achievements/player/{'{xuid}'}/{'{titleId}'}"
-        self.title360_achievements_xuid = f"achievements/player/{'{xuid}'}/title/{'{titleId}'}"
-        self.player360_achievements_xuid = f"achievements/x360/{'{xuid}'}/title/{'{titleId}'}"
+        self.achievements_xuid = "achievements/player/{xuid}"
+        self.title_achievements_xuid = "achievements/player/{xuid}/{titleId}"
+        self.title360_achievements_xuid = "achievements/player/{xuid}/title/{titleId}"
+        self.player360_achievements_xuid = "achievements/x360/{xuid}/title/{titleId}"
         
         # clubs
         self.club_details = f"clubs/{'{clubId}'}"
@@ -57,20 +57,20 @@ class URLs:
     def search_gamertag_url(self, gamertag):
         return self.base_url + self.search_gamertag.format(gamertag=gamertag)
     
-    def xuid_presence_url(self):
-        return self.base_url + self.xuid_presence
+    def xuid_presence_url(self, xuid):
+        return self.base_url + self.xuid_presence.format(xuid=xuid)
     
-    def achievements_xuid_url(self):
-        return self.base_url + self.achievements_xuid
+    def achievements_xuid_url(self, xuid):
+        return self.base_url + self.achievements_xuid.format(xuid=xuid)
     
-    def title_achievements_xuid_url(self):
-        return self.base_url + self.title_achievements_xuid
+    def title_achievements_xuid_url(self, xuid, titleId):
+        return self.base_url + self.title_achievements_xuid.format(xuid=xuid, titleId=titleId)
     
-    def title360_achievements_xuid_url(self):
-        return self.base_url + self.title360_achievements_xuid
+    def title360_achievements_xuid_url(self, xuid, titleId):
+        return self.base_url + self.title360_achievements_xuid.format(xuid=xuid, titleId=titleId)
     
-    def player360_achievements_xuid_url(self):
-        return self.base_url + self.player360_achievements_xuid
+    def player360_achievements_xuid_url(self, xuid, titleId):
+        return self.base_url + self.player360_achievements_xuid.format(xuid=xuid, titleId=titleId)
     
     def club_details_url(self):
         return self.base_url + self.club_details

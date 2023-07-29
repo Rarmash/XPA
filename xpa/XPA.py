@@ -2,12 +2,16 @@ import requests
 
 from .URLs import URLs
 
+from .classes.ACCOUNT_INFO_XUID import ACCOUNT_INFO_XUID
+from .classes.ACCOUNT_INFO_GAMERTAG import ACCOUNT_INFO_GAMERTAG
+from .classes.XUID_PRESENCE import XUID_PRESENCE
+
 class XPA:
     def __init__(self, api_key):
         self.api_key = api_key
         self.url = URLs()
         
-    def _make_requst(self, endpoint):
+    def _make_request(self, endpoint):
         headers = {'x-authorization': self.api_key}
         return requests.get(endpoint, headers=headers)
     
@@ -17,9 +21,28 @@ class XPA:
                 return setting['value']
         return None
     
-    def get_account_info_xuid(self, xuid):
+    def get_account_info_xuid(self, xuid: str) -> ACCOUNT_INFO_XUID:
+        """Get someone's profile information
+
+        Args:
+            xuid (str): xuid of specified user.
+
+        Returns:
+            ACCOUNT_INFO_XUID: user account info.
+            
+            Object attributes:
+            - GameDisplayPicRaw: str
+            - Gamerscore: str
+            - Gamertag: str
+            - AccountTier: str
+            - XboxOneRep: str
+            - PreferredColor: str
+            - RealName: str
+            - Bio: str
+            - Location: str
+        """
         endpoint = self.url.account_xuid_url(xuid)
-        response = self._make_requst(endpoint).json()
+        response = self._make_request(endpoint).json()
         user_data = response['profileUsers'][0]['settings']
         account_info = ACCOUNT_INFO_XUID(
             GameDisplayPicRaw = self._find_setting_by_id(user_data, 'GameDisplayPicRaw'),
@@ -34,9 +57,58 @@ class XPA:
         )
         return account_info
 
-    def get_account_info_gamertag(self, gamertag):
+    def get_account_info_gamertag(self, gamertag: str) -> ACCOUNT_INFO_GAMERTAG:
+        """_summary_
+
+        Args:
+            gamertag (str): gamertag of specified user
+
+        Returns:
+            ACCOUNT_INFO_GAMERTAG: user account info.
+            Object attributes:
+            - xuid: str
+            - displayName: str
+            - realName: str
+            - displayPicRaw: str
+            - showUserAsAvatar: str
+            - gamertag: str
+            - gamerScore: str
+            - modernGamertag: str
+            - modernGamertagSuffix: str
+            - uniqueModernGamertag: str
+            - xboxOneRep: str
+            - presenceState: str
+            - presenceText: str
+            - presenceDevices: list
+            - isBroadcasting: bool
+            - isCloaked: bool
+            - isQuarantined: bool
+            - isXbox360Gamerpic: bool
+            - lastSeenDateTimeUtc: str
+            - preferredColor: dict
+            - presenceDetails: dict
+            - titlePresence: dict
+            - titleSummaries: list
+            - accountTier: str
+            - bio: str
+            - isVerified: bool
+            - location: str
+            - tenure: str
+            - watermarks: dict
+            - blocked: bool
+            - mute: bool
+            - followerCount: int
+            - followingCount: int
+            - hasGamePass: bool
+            - socialManager: str
+            - broadcast: str
+            - avatar: str
+            - linkedAccounts: list
+            - colorTheme: str
+            - preferredPlatforms: dict
+        """
         endpoint = self.url.search_gamertag_url(gamertag)
-        response = self._make_requst(endpoint).json()
+        response = self._make_request(endpoint).json()
         user_data = response['people'][0]
         account_info = ACCOUNT_INFO_GAMERTAG(
             xuid = user_data["xuid"],
@@ -82,58 +154,39 @@ class XPA:
         )
         return account_info
     
-class ACCOUNT_INFO_XUID:
-    def __init__(self, GameDisplayPicRaw, Gamerscore, Gamertag, AccountTier, XboxOneRep, PreferredColor, RealName, Bio, Location):
-        self.GameDisplayPicRaw = GameDisplayPicRaw
-        self.Gamerscore = Gamerscore
-        self.Gamertag = Gamertag
-        self.AccountTier = AccountTier
-        self.XboxOneRep = XboxOneRep
-        self.PreferredColor = PreferredColor
-        self.RealName = RealName
-        self.Bio = Bio
-        self.Location = Location
-        
-class ACCOUNT_INFO_GAMERTAG:
-    def __init__(self, xuid, displayName, realName, displayPicRaw, showUserAsAvatar, gamertag, gamerScore, modernGamertag, modernGamertagSuffix, uniqueModernGamertag, xboxOneRep, presenceState, presenceText, presenceDevices, isBroadcasting, isCloaked, isQuarantined, isXbox360Gamerpic, lastSeenDateTimeUtc, preferredColor, presenceDetails, titlePresence, titleSummaries, accountTier, bio, isVerified, location, tenure, watermarks, blocked, mute, followerCount, followingCount, hasGamePass, socialManager, broadcast, avatar, linkedAccounts, colorTheme, preferredPlatforms):
-        self.xuid = xuid
-        self.displayName = displayName
-        self.realName = realName
-        self.displayPicRaw = displayPicRaw
-        self.showUserAsAvatar = showUserAsAvatar
-        self.gamertag = gamertag
-        self.gamerScore = gamerScore
-        self.modernGamertag = modernGamertag
-        self.modernGamertagSuffix = modernGamertagSuffix
-        self.uniqueModernGamertag = uniqueModernGamertag
-        self.xboxOneRep = xboxOneRep
-        self.presenceState = presenceState
-        self.presenceText = presenceText
-        self.presenceDevices = presenceDevices
-        self.isBroadcasting = isBroadcasting
-        self.isCloaked = isCloaked
-        self.isQuarantined = isQuarantined
-        self.isXbox360Gamerpic = isXbox360Gamerpic
-        self.lastSeenDateTimeUtc = lastSeenDateTimeUtc
-        self.preferredColor = preferredColor
-        self.presenceDetails = presenceDetails
-        self.titlePresence = titlePresence
-        self.titleSummaries = titleSummaries
-        self.accountTier = accountTier
-        self.bio = bio
-        self.isVerified = isVerified
-        self.location = location
-        self.tenure = tenure
-        self.watermarks = watermarks
-        self.blocked = blocked
-        self.mute = mute
-        self.followerCount = followerCount
-        self.followingCount = followingCount
-        self.hasGamePass = hasGamePass
-        self.socialManager = socialManager
-        self.broadcast = broadcast
-        self.avatar = avatar
-        self.linkedAccounts = linkedAccounts
-        self.colorTheme = colorTheme
-        self.preferredPlatforms = preferredPlatforms
-        
+    def get_presence(self, xuid: str):
+        endpoint = self.url.xuid_presence_url(xuid)
+        response = self._make_request(endpoint).json()
+        user_data = response[0]
+        presence = XUID_PRESENCE(
+            state = user_data["state"],
+            last_seen_device_type = user_data["lastSeen"]["deviceType"],
+            last_seen_title_id = user_data["lastSeen"]["titleId"],
+            last_seen_title_name = user_data["lastSeen"]["titleName"],
+            last_seen_timestamp = user_data["lastSeen"]["timestamp"]
+        )
+        return presence
+
+    def get_user_achievements(self, xuid: str):
+        endpoint = self.url.achievements_xuid_url(xuid)
+        response = self._make_request(endpoint).json()
+        user_data = response['titles']
+        return user_data
+
+    def get_title_achievements(self, xuid: str, titleId: str):
+        endpoint = self.url.title_achievements_xuid_url(xuid, titleId)
+        response = self._make_request(endpoint).json()
+        user_data = response["achievements"]
+        return user_data
+
+    def get_title360_achievements(self, xuid: str, titleId: str):
+        endpoint = self.url.title360_achievements_xuid_url(xuid, titleId)
+        response = self._make_request(endpoint).json()
+        user_data = response["achievements"]
+        return user_data
+
+    def get_player360_achievements(self, xuid: str, titleId: str):
+        endpoint = self.url.player360_achievements_xuid_url(xuid, titleId)
+        response = self._make_request(endpoint).json()
+        user_data = response["achievements"]
+        return user_data
