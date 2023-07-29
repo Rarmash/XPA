@@ -1,1 +1,1 @@
-# PyXboxAPI
+# XPA (Xbox Python API)
