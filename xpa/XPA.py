@@ -5,6 +5,7 @@ from .URLs import URLs
 from .classes.ACCOUNT_INFO_XUID import ACCOUNT_INFO_XUID
 from .classes.ACCOUNT_INFO_GAMERTAG import ACCOUNT_INFO_GAMERTAG
 from .classes.XUID_PRESENCE import XUID_PRESENCE
+from .classes.CLUB_DETAILS import CLUB_DETAILS
 
 class XPA:
     def __init__(self, api_key):
@@ -190,3 +191,54 @@ class XPA:
         response = self._make_request(endpoint).json()
         user_data = response["achievements"]
         return user_data
+    
+    def get_club_details(self, clubId: str):
+        endpoint = self.url.club_details_url(clubId)
+        response = self._make_request(endpoint).json()
+        club_data = response["clubs"][0]
+        club_details = CLUB_DETAILS(
+            identificator = club_data["id"],
+            clubType = club_data["clubType"],
+            creationDateUtc = club_data["creationDateUtc"],
+            settings = club_data["settings"],
+            followersCount = club_data["followersCount"],
+            membersCount = club_data["membersCount"],
+            moderatorsCount = club_data["moderatorsCount"],
+            recommendedCount = club_data["recommendedCount"],
+            requestedToJoinCount = club_data["requestedToJoinCount"],
+            clubPresenceCount = club_data["clubPresenceCount"],
+            clubPresenceTodayCount = club_data["clubPresenceTodayCount"],
+            clubPresenceInGameCount = club_data["clubPresenceInGameCount"],
+            roster = club_data["roster"],
+            targetRoles = club_data["targetRoles"],
+            recommendation = club_data["recommendation"],
+            clubPresence = club_data["clubPresence"],
+            state = club_data["state"],
+            suspendedUntilUtc = club_data["suspendedUntilUtc"],
+            reportCount = club_data["reportCount"],
+            reportedItemsCount = club_data["reportedItemsCount"],
+            maxMembersPerClub = club_data["maxMembersPerClub"],
+            ownerXuid = club_data["ownerXuid"],
+            founderXuid = club_data["founderXuid"],
+            description = club_data["profile"]["description"]["value"],
+            rules = club_data["profile"]["rules"]["value"],
+            name = club_data["profile"]["name"]["value"],
+            shortName = club_data["profile"]["shortName"]["value"],
+            isSearchable = club_data["profile"]["isSearchable"]["value"],
+            isRecommendable = club_data["profile"]["isRecommendable"]["value"],
+            requestToJoinEnabled = club_data["profile"]["requestToJoinEnabled"]["value"],
+            openJoinEnabled = club_data["profile"]["openJoinEnabled"]["value"],
+            leaveEnabled = club_data["profile"]["leaveEnabled"]["value"],
+            transferOwnershipEnabled = club_data["profile"]["transferOwnershipEnabled"]["value"],
+            matureContentEnabled = club_data["profile"]["matureContentEnabled"]["value"],
+            watchClubTitlesOnly = club_data["profile"]["watchClubTitlesOnly"]["value"],
+            displayImageUrl = club_data["profile"]["displayImageUrl"]["value"],
+            backgroundImageUrl = club_data["profile"]["backgroundImageUrl"]["value"],
+            preferredLocale = club_data["profile"]["preferredLocale"]["value"],
+            tags = club_data["profile"]["tags"]["value"],
+            associatedTitles = club_data["profile"]["associatedTitles"]["value"],
+            primaryColor = club_data["profile"]["primaryColor"]["value"],
+            secondaryColor = club_data["profile"]["secondaryColor"]["value"],
+            tertiaryColor = club_data["profile"]["tertiaryColor"]["value"]
+        )
+        return club_details

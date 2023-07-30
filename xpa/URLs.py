@@ -15,7 +15,7 @@ class URLs:
         self.player360_achievements_xuid = "achievements/x360/{xuid}/title/{titleId}"
         
         # clubs
-        self.club_details = f"clubs/{'{clubId}'}"
+        self.club_details = "clubs/{clubId}"
         self.find_club = f"clubs/find?q={'{query}'}"
         
         # friends
@@ -72,8 +72,8 @@ class URLs:
     def player360_achievements_xuid_url(self, xuid, titleId):
         return self.base_url + self.player360_achievements_xuid.format(xuid=xuid, titleId=titleId)
     
-    def club_details_url(self):
-        return self.base_url + self.club_details
+    def club_details_url(self, clubId):
+        return self.base_url + self.club_details.format(clubId=clubId)
     
     def find_club_url(self):
         return self.base_url + self.find_club
