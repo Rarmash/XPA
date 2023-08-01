@@ -16,10 +16,9 @@ class URLs:
         
         # clubs
         self.club_details = "clubs/{clubId}"
-        self.find_club = f"clubs/find?q={'{query}'}"
         
         # friends
-        self.friends_xuid = f"friends/{'{xuid}'}"
+        self.friends_xuid = "friends/{xuid}"
         self.search_friend = f"friends/search/{'{xuid}'}"
         
         # gamepass
@@ -75,11 +74,8 @@ class URLs:
     def club_details_url(self, clubId):
         return self.base_url + self.club_details.format(clubId=clubId)
     
-    def find_club_url(self):
-        return self.base_url + self.find_club
-    
-    def friends_xuid_url(self):
-        return self.base_url + self.friends_xuid
+    def friends_xuid_url(self, xuid):
+        return self.base_url + self.friends_xuid.format(xuid=xuid)
     
     def search_friend_url(self):
         return self.base_url + self.search_friend

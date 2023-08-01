@@ -242,3 +242,51 @@ class XPA:
             tertiaryColor = club_data["profile"]["tertiaryColor"]["value"]
         )
         return club_details
+
+    def get_friends_xuid(self, xuid: str):
+        endpoint = self.url.friends_xuid_url(xuid)
+        response = self._make_request(endpoint).json()
+        friend_data = response['people'][0]
+        friend_details = ACCOUNT_INFO_GAMERTAG(
+            xuid = friend_data["xuid"],
+            displayName = friend_data["displayName"],
+            realName = friend_data["realName"],
+            displayPicRaw = friend_data["displayPicRaw"],
+            showUserAsAvatar = friend_data["showUserAsAvatar"],
+            gamertag = friend_data["gamertag"],
+            gamerScore = friend_data["gamerScore"],
+            modernGamertag = friend_data["modernGamertag"],
+            modernGamertagSuffix = friend_data["modernGamertagSuffix"],
+            uniqueModernGamertag = friend_data["uniqueModernGamertag"],
+            xboxOneRep = friend_data["xboxOneRep"],
+            presenceState = friend_data["presenceState"],
+            presenceText = friend_data["presenceText"],
+            presenceDevices = friend_data["presenceDevices"],
+            isBroadcasting = friend_data["isBroadcasting"],
+            isCloaked = friend_data["isCloaked"],
+            isQuarantined = friend_data["isQuarantined"],
+            isXbox360Gamerpic = friend_data["isXbox360Gamerpic"],
+            lastSeenDateTimeUtc = friend_data["lastSeenDateTimeUtc"],
+            preferredColor = friend_data["preferredColor"],
+            presenceDetails = friend_data["presenceDetails"],
+            titlePresence = friend_data["titlePresence"],
+            titleSummaries = friend_data["titleSummaries"],
+            accountTier = friend_data["detail"]["accountTier"],
+            bio = friend_data["detail"]["bio"],
+            isVerified = friend_data["detail"]["isVerified"],
+            location = friend_data["detail"]["location"],
+            tenure = friend_data["detail"]["tenure"],
+            watermarks = friend_data["detail"]["watermarks"],
+            blocked = friend_data["detail"]["blocked"],
+            mute = friend_data["detail"]["mute"],
+            followerCount = friend_data["detail"]["followerCount"],
+            followingCount = friend_data["detail"]["followingCount"],
+            hasGamePass = friend_data["detail"]["hasGamePass"],
+            socialManager = friend_data["socialManager"],
+            broadcast = friend_data["broadcast"],
+            avatar = friend_data["avatar"],
+            linkedAccounts = friend_data["linkedAccounts"],
+            colorTheme = friend_data["colorTheme"],
+            preferredPlatforms = friend_data["preferredPlatforms"],
+        )
+        return friend_details
