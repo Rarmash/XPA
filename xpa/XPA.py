@@ -6,6 +6,7 @@ from .classes.ACCOUNT_INFO_XUID import ACCOUNT_INFO_XUID
 from .classes.ACCOUNT_INFO_GAMERTAG import ACCOUNT_INFO_GAMERTAG
 from .classes.XUID_PRESENCE import XUID_PRESENCE
 from .classes.CLUB_DETAILS import CLUB_DETAILS
+from .classes.FRIEND_INFO_GAMERTAG import FRIEND_INFO_GAMERTAG
 
 class XPA:
     def __init__(self, api_key):
@@ -290,3 +291,47 @@ class XPA:
             preferredPlatforms = friend_data["preferredPlatforms"],
         )
         return friend_details
+    
+    def search_friend_list(self, gamertag: str):
+        endpoint = self.url.search_friend_url(gamertag)
+        response = self._make_request(endpoint).json()
+        friends_data = response["profileUsers"][0]["settings"]
+        friend_data = {item['id']: item['value'] for item in friends_data}
+        friend_details = FRIEND_INFO_GAMERTAG(
+            GameDisplayPicRaw = friend_data["GameDisplayPicRaw"],
+            Gamerscore = friend_data["Gamerscore"],
+            Gamertag = friend_data["Gamertag"],
+            AccountTier = friend_data["AccountTier"],
+            XboxOneRep = friend_data["XboxOneRep"],
+            RealName = friend_data["RealName"],
+            Bio = friend_data["Bio"],
+            TenureLevel = friend_data["TenureLevel"],
+            Watermarks = friend_data["Watermarks"],
+            Location = friend_data["Location"],
+            ShowUserAsAvatar = friend_data["ShowUserAsAvatar"],
+        )
+        return friend_details
+    
+    def get_gamepass_all_games(self):
+        endpoint = self.url.gamepass_all_url()
+        response = self._make_request(endpoint).json()[1:]
+        id_list = [item['id'] for item in response]
+        return id_list
+    
+    def get_gamepass_pc_games(self):
+        endpoint = self.url.gamepass_pc_url()
+        response = self._make_request(endpoint).json()[1:]
+        id_list = [item['id'] for item in response]
+        return id_list
+    
+    def get_gamepass_eaplay_games(self):
+        endpoint = self.url.gamepass_eaplay_url()
+        response = self._make_request(endpoint).json()[1:]
+        id_list = [item['id'] for item in response]
+        return id_list
+    
+    def get_gamepass_nocontroller_games(self):
+        endpoint = self.url.gamepass_nocontroller_url()
+        response = self._make_request(endpoint).json()[1:]
+        id_list = [item['id'] for item in response]
+        return id_list

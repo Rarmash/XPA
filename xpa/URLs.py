@@ -19,7 +19,7 @@ class URLs:
         
         # friends
         self.friends_xuid = "friends/{xuid}"
-        self.search_friend = f"friends/search/{'{xuid}'}"
+        self.search_friend = "friends/search/{gamertag}"
         
         # gamepass
         self.gamepass_all = "gamepass/all"
@@ -77,8 +77,8 @@ class URLs:
     def friends_xuid_url(self, xuid):
         return self.base_url + self.friends_xuid.format(xuid=xuid)
     
-    def search_friend_url(self):
-        return self.base_url + self.search_friend
+    def search_friend_url(self, gamertag):
+        return self.base_url + self.search_friend.format(gamertag=gamertag)
     
     def gamepass_all_url(self):
         return self.base_url + self.gamepass_all
