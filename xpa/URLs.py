@@ -35,6 +35,7 @@ class URLs:
         self.marketplace_deals = "marketplace/deals"
         self.marketplace_topfree = "marketplace/top-free"
         self.marketplace_mostplayed = "marketplace/most-played"
+        self.marketplace_searchgame = "marketplace/title/{titleId}"
         
         # player
         self.player_summary = f"player/summary/{'{xuid}'}"
@@ -112,6 +113,9 @@ class URLs:
     
     def marketplace_mostplayed_url(self):
         return self.base_url + self.marketplace_mostplayed
+    
+    def marketplace_searchgame_url(self, titleId):
+        return self.base_url + self.marketplace_searchgame.format(titleId=titleId)
     
     def player_summary_url(self):
         return self.base_url + self.player_summary

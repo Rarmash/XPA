@@ -335,3 +335,51 @@ class XPA:
         response = self._make_request(endpoint).json()[1:]
         id_list = [item['id'] for item in response]
         return id_list
+
+    def get_new_marketplace_games(self):
+        endpoint = self.url.marketplace_new_url()
+        response = self._make_request(endpoint).json()
+        games_list = response["Products"]
+        return games_list
+    
+    def get_toppaid_marketplace_games(self):
+        endpoint = self.url.marketplace_toppaid_url()
+        response = self._make_request(endpoint).json()
+        games_list = response["Products"]
+        return games_list
+    
+    def get_bestrated_marketplace_games(self):
+        endpoint = self.url.marketplace_bestrated_url()
+        response = self._make_request(endpoint).json()
+        games_list = response["Products"]
+        return games_list
+    
+    def get_comingcoon_marketplace_games(self):
+        endpoint = self.url.marketplace_comingsoon_url()
+        response = self._make_request(endpoint).json()
+        games_list = response["Products"]
+        return games_list
+    
+    def get_deals_marketplace_games(self):
+        endpoint = self.url.marketplace_deals_url()
+        response = self._make_request(endpoint).json()
+        games_list = response["Products"]
+        return games_list
+
+    def get_topfree_marketplace_games(self):
+        endpoint = self.url.marketplace_topfree_url()
+        response = self._make_request(endpoint).json()
+        games_list = response["Products"]
+        return games_list
+
+    def get_mostplayed_marketplace_games(self):
+        endpoint = self.url.marketplace_mostplayed_url()
+        response = self._make_request(endpoint).json()
+        games_list = response["Products"]
+        return games_list
+    
+    def search_marketplace_game(self, titleId):
+        endpoint = self.url.marketplace_searchgame_url(titleId=titleId)
+        response = self._make_request(endpoint).json()
+        games_list = response["Products"]
+        return games_list
