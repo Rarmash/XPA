@@ -158,7 +158,7 @@ class XPA:
         )
         return account_info
 
-    def get_presence(self, xuid: str):
+    def get_presence(self, xuid: str) -> XUID_PRESENCE:
         """
         Get user presence information
 
@@ -249,7 +249,7 @@ class XPA:
         user_data = response["achievements"]
         return user_data
 
-    def get_club_details(self, clubId: str):
+    def get_club_details(self, clubId: str) -> CLUB_DETAILS:
         """
         Get club details
 
@@ -353,7 +353,7 @@ class XPA:
         )
         return club_details
 
-    def get_friends_xuid(self, xuid: str):
+    def get_friends_xuid(self, xuid: str) -> ACCOUNT_INFO_GAMERTAG:
         """
         Get user friends
 
@@ -361,7 +361,48 @@ class XPA:
             xuid (str): xuid of specified user
 
         Returns:
-            list: user friends.
+            ACCOUNT_INFO_GAMERTAG: user friends.
+            Object attributes:
+            - xuid: str
+            - displayName: str
+            - realName: str
+            - displayPicRaw: str
+            - showUserAsAvatar: str
+            - gamertag: str
+            - gamerScore: str
+            - modernGamertag: str
+            - modernGamertagSuffix: str
+            - uniqueModernGamertag: str
+            - xboxOneRep: str
+            - presenceState: str
+            - presenceText: str
+            - presenceDevices: list
+            - isBroadcasting: bool
+            - isCloaked: bool
+            - isQuarantined: bool
+            - isXbox360Gamerpic: bool
+            - lastSeenDateTimeUtc: str
+            - preferredColor: dict
+            - presenceDetails: dict
+            - titlePresence: dict
+            - titleSummaries: list
+            - accountTier: str
+            - bio: str
+            - isVerified: bool
+            - location: str
+            - tenure: str
+            - watermarks: dict
+            - blocked: bool
+            - mute: bool
+            - followerCount: int
+            - followingCount: int
+            - hasGamePass: bool
+            - socialManager: str
+            - broadcast: str
+            - avatar: str
+            - linkedAccounts: list
+            - colorTheme: str
+            - preferredPlatforms: dict
         """
         endpoint = self.url.friends_xuid_url(xuid)
         response = self._make_request(endpoint).json()
@@ -410,7 +451,7 @@ class XPA:
         )
         return friend_details
 
-    def search_friend_list(self, gamertag: str):
+    def search_friend_list(self, gamertag: str) -> FRIEND_INFO_GAMERTAG:
         """
         Search for a friend
 
@@ -598,7 +639,7 @@ class XPA:
         games_list = response["Products"]
         return games_list
 
-    def get_player_summary(self, xuid: str):
+    def get_player_summary(self, xuid: str) -> PLAYER_SUMMARY:
         """
         Get player summary
 
