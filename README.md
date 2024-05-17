@@ -30,4 +30,4 @@ presence = xpa.get_presence(xuid="xuid")
 print(presence.state)
 ```
 
-Full documentation can be found [here](https://github.com/Rarmash/Xbox-Python-API/docs).
+Full documentation can be found [here](https://github.com/Rarmash/Xbox-Python-API/tree/master/docs).
