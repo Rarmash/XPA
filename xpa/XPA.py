@@ -10,22 +10,54 @@ from .classes.XUID_PRESENCE import XUID_PRESENCE
 
 
 class XPA:
+    """
+    Xbox API class
+    """
     def __init__(self, api_key):
+        """
+        Initialize the XPA class
+
+        Args:
+            api_key (str): API key for the XPA API.
+
+        Returns:
+            None
+        """
         self.api_key = api_key
         self.url = URLs()
 
     def _make_request(self, endpoint):
+        """
+        Make a request to the specified endpoint
+
+        Args:
+            endpoint (str): endpoint to make the request to.
+
+        Returns:
+            requests.models.Response: response from the request.
+        """
         headers = {'x-authorization': self.api_key}
         return requests.get(endpoint, headers=headers)
 
     def _find_setting_by_id(self, settings, setting_id):
+        """
+        Find a setting by its id
+
+        Args:
+            settings (list): list of settings
+            setting_id (str): id of the setting to find
+
+        Returns:
+            str: value of the setting
+        """
         for setting in settings:
             if setting['id'] == setting_id:
                 return setting['value']
         return None
 
     def get_account_info_xuid(self, xuid: str) -> ACCOUNT_INFO_XUID:
-        """Get someone's profile information
+        """
+        Get someone's profile information
 
         Args:
             xuid (str): xuid of specified user.

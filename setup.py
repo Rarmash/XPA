@@ -9,7 +9,7 @@ def read(f_name):
 
 setup(
     name="xbox-python-api",
-    version="0.1.2.2",
+    version="0.1.2.3",
     url="https://github.com/Rarmash/Xbox-Python-API",
     author="Rarmash",
     description="Xbox API library",
