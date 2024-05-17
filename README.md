@@ -1,4 +1,4 @@
-# XPA (Xbox Python API)
+# Xbox Python API
 Xbox Python API wrapper based on https://xbl.io.
 
 ## Installation
@@ -30,4 +30,4 @@ presence = xpa.get_presence(xuid="xuid")
 print(presence.state)
 ```
 
-Full documentation can be found [here](docs).
+Full documentation can be found [here](https://github.com/Rarmash/Xbox-Python-API/docs).
