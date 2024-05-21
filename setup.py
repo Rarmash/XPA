@@ -9,12 +9,12 @@ def read(f_name):
 
 setup(
     name="xbox-python-api",
-    version="0.1.2.4",
+    version="0.1.3",
     url="https://github.com/Rarmash/Xbox-Python-API",
     author="Rarmash",
     description="Xbox API library",
     packages=find_packages(),
     long_description=read("README.md"),
     long_description_content_type='text/markdown',
-    install_requires=["requests==2.31.0"]
+    install_requires=["requests==2.32.0"]
 )
