@@ -77,10 +77,7 @@ The `XPA` class provides methods for accessing Xbox Live API endpoints to retrie
   - `xuid` (str): XUID of the specified user.
 - **Returns:** An instance of `XUID_PRESENCE` with the following attributes:
   - `state` (str): User's state.
-  - `last_seen_device_type` (str): User's last seen device type.
-  - `last_seen_title_id` (str): User's last seen title ID.
-  - `last_seen_title_name` (str): User's last seen title name.
-  - `last_seen_timestamp` (str): User's last seen timestamp.
+  - `devices` (list): List of devices the user is present on with titles information.
 
 ### `get_user_achievements(xuid: str) -> list`
 - **Description:** Get user achievements using their XUID.

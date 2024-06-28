@@ -7,12 +7,14 @@ from .classes.CLUB_DETAILS import CLUB_DETAILS
 from .classes.FRIEND_INFO_GAMERTAG import FRIEND_INFO_GAMERTAG
 from .classes.PLAYER_SUMMARY import PLAYER_SUMMARY
 from .classes.XUID_PRESENCE import XUID_PRESENCE
+from .ErrorHandler import *
 
 
 class XPA:
     """
     Xbox API class
     """
+
     def __init__(self, api_key):
         """
         Initialize the XPA class
@@ -37,7 +39,27 @@ class XPA:
             requests.models.Response: response from the request.
         """
         headers = {'x-authorization': self.api_key}
-        return requests.get(endpoint, headers=headers)
+        try:
+            response = requests.get(endpoint, headers=headers)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as http_err:
+            if response.status_code == 400:
+                raise XboxApiBadRequestError("Bad request") from http_err
+            elif response.status_code == 401:
+                raise XboxApiAuthError("Unauthorized") from http_err
+            elif response.status_code == 403:
+                raise XboxApiForbiddenError("Forbidden") from http_err
+            elif response.status_code == 404:
+                raise XboxApiNotFoundError("Not found") from http_err
+            elif response.status_code == 429:
+                raise XboxApiRateLimitError("Rate limit exceeded") from http_err
+            elif response.status_code == 500:
+                raise XboxApiBadRequestError("Internal server error") from http_err
+            elif response.status_code == 503:
+                raise XboxApiServerError("Service unavailable") from http_err
+        except Exception as err:
+            raise XboxApiError("An error occurred") from err
+        return response
 
     def _find_setting_by_id(self, settings, setting_id):
         """
@@ -145,7 +167,10 @@ class XPA:
         """
         endpoint = self.url.search_gamertag_url(gamertag)
         response = self._make_request(endpoint).json()
-        user_data = response['people'][0]
+        try:
+            user_data = response['people'][0]
+        except IndexError:
+            raise XboxApiNotFoundError("User not found")
         account_info = ACCOUNT_INFO_GAMERTAG(
             xuid=user_data["xuid"],
             displayName=user_data["displayName"],
@@ -211,10 +236,7 @@ class XPA:
         user_data = response[0]
         presence = XUID_PRESENCE(
             state=user_data["state"],
-            last_seen_device_type=user_data["lastSeen"]["deviceType"],
-            last_seen_title_id=user_data["lastSeen"]["titleId"],
-            last_seen_title_name=user_data["lastSeen"]["titleName"],
-            last_seen_timestamp=user_data["lastSeen"]["timestamp"]
+            devices=user_data["devices"]
         )
         return presence
 

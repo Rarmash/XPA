@@ -27,7 +27,7 @@ print(account_info.Gamertag)
 
 # Get user presence
 presence = xpa.get_presence(xuid="xuid")
-print(presence.state)
+print(presence.devices)
 ```
 
 Full documentation can be found [here](https://github.com/Rarmash/Xbox-Python-API/tree/master/docs).
